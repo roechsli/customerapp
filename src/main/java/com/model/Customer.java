@@ -2,6 +2,14 @@ package com.model;
 
 public class Customer implements ICustomer{
 	
+	@Override
+	public String toString() {
+		return "Customer [" + (id != null ? "id=" + id + ", " : "")
+				+ (firstName != null ? "firstName=" + firstName + ", " : "")
+				+ (lastName != null ? "lastName=" + lastName + ", " : "") + (phone != null ? "phone=" + phone : "")
+				+ "]";
+	}
+
 	private Long id;
 	private String firstName;
 	private String lastName;
