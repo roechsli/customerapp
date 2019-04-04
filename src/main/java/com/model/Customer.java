@@ -16,6 +16,19 @@ public class Customer implements ICustomer{
 		this.lastName = lastName;
 	}
 	
+	public Customer(String firstName, String lastName, String phone) {
+		super();
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.phone = phone;
+	}
+
+	public Customer(String firstName, String lastName) {
+		super();
+		this.firstName = firstName;
+		this.lastName = lastName;
+	}
+
 	public Customer(Long id, String firstName, String lastName, String phone) {
 		super();
 		this.id = id;
