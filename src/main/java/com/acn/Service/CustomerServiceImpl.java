@@ -16,7 +16,7 @@ public class CustomerServiceImpl implements ICustomerService {
 	}
 	@Override
 	public List<Customer> getAllCustomer() {
-		return custdao.getAllCustomer();
+		return custdao.getAllCustomers();
 	}
 	@Override
 	public List<Customer> getCustomerByName(String fname, String lname) {
