@@ -2,12 +2,12 @@ package com.acn.Service;
 
 import java.util.List;
 
-import com.acn.CustomerDao;
+import com.acn.CustomerDaoImpl;
 import com.model.Customer;
 
-public class CustomerServiceImpl implements CustomerService {
-	private CustomerDao custdao;
-	public CustomerServiceImpl(CustomerDao custdao) {
+public class CustomerServiceImpl implements ICustomerService {
+	private CustomerDaoImpl custdao;
+	public CustomerServiceImpl(CustomerDaoImpl custdao) {
 		super();
 		this.custdao = custdao;
 	}
