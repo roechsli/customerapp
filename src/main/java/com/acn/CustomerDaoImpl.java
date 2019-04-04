@@ -1,6 +1,7 @@
 package com.acn;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -51,8 +52,32 @@ public class CustomerDaoImpl implements ICustomerDao {
 
 	@Override
 	public List<Customer> getCustomerByName(String fname, String lname) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Customer> myCustList = new ArrayList<>();
+		Customer newCust = null;
+		String sqlStr = "select * from customer where lname LIKE ? and fname LIKE ?";
+		
+		ResultSet rs = null;
+		try (Connection conn = myConn.getMyConnection()){
+			PreparedStatement stmt = conn.prepareStatement(sqlStr);
+			stmt.setString(1, lname);
+			stmt.setString(2, fname);
+			rs = stmt.executeQuery();
+			
+			try {
+				while (rs.next()) {
+					newCust = getCustFromRs(rs);
+//					readAddressForCustomer(newCust, conn);
+					myCustList.add(newCust);
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return myCustList;
 	}
 
 	@Override
@@ -82,16 +107,16 @@ public class CustomerDaoImpl implements ICustomerDao {
 	private Customer getCustFromRs(ResultSet rs) {
 		Customer newCust = null;
 		Address newAddress = null;
-//		try {
-//			newCust = new Customer(
-//					rs.getLong("id"),
-//					rs.getString("fname"),
-//					rs.getString("lname"),
-//					rs.getString("phone"));
-//		} catch (SQLException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+		try {
+			newCust = new Customer(
+					rs.getLong("id"),
+					rs.getString("fname"),
+					rs.getString("lname"),
+					rs.getString("phone"));
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return newCust;
 	}
 
