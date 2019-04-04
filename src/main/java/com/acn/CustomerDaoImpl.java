@@ -88,7 +88,22 @@ public class CustomerDaoImpl implements ICustomerDao {
 
 	@Override
 	public void addCustomer(Customer cust) {
-		// TODO Auto-generated method stub
+		String sqlStr = "insert into customer (fname, lname) values (?,?)";
+		ResultSet rs = null;
+		
+		try (Connection conn = myConn.getMyConnection()){
+			PreparedStatement stmt = conn.prepareStatement(sqlStr, Statement.RETURN_GENERATED_KEYS);
+			stmt.setString(1, cust.getFirstName());
+			stmt.setString(2, cust.getLastName());
+			int numOfRows = stmt.executeUpdate();
+			rs = stmt.getGeneratedKeys();
+			if (rs.next()) {
+				cust.setId(rs.getLong(1)); // first column in this row is PK
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 
