@@ -1,6 +1,6 @@
 package com.model;
 
-public class Customer {
+public class Customer implements ICustomer{
 	
 	private Long id;
 	private String firstName;
@@ -55,5 +55,4 @@ public class Customer {
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
-		
 }
