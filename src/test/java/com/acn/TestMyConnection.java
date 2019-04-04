@@ -29,7 +29,7 @@ public class TestMyConnection {
 	@Test
 	public void testGetMyConnection() throws SQLException, FileNotFoundException, IOException {
 		assertNotNull(myconn);
-		Connection conn = myconn.getMyConnection();
+		MyConnection conn = myconn.getMyConnection();
 		assertNotNull(conn);
 		System.out.println(conn.getMetaData().getDatabaseProductName());
 		System.out.println(conn.getMetaData().getDatabaseMajorVersion());
