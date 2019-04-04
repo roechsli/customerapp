@@ -37,7 +37,7 @@ public class MyConnection {
 			bds.setPassword(pass);
 			bds.setDriverClassName(driverclass);
 			bds.setUsername(user);
-	//		bds.setInitialSize(Integer.parseInt(poolsize));
+			bds.setInitialSize(Integer.parseInt(poolsize));
 			ds = bds;
 
 		} catch (IOException e) {
