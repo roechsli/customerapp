@@ -17,8 +17,9 @@ public class MyConnection {
 
 	private DataSource ds;
 	private Properties props = new Properties();
-
-	// Constructor - load the properties file, get the Data and set the Connection
+	
+	// Constructor
+	// load the properties file, get the Data and set the Connection
 	public MyConnection() {
 		try {
 			
@@ -46,6 +47,8 @@ public class MyConnection {
 
 	}
 
+	
+	// Method which returns the Connection
 	public Connection getMyConnection() throws SQLException {
 		return ds.getConnection();
 	}

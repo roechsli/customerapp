@@ -1,5 +1,5 @@
-url=jdbc:mysql://localhost:3306/jumpsecond1903
+url=jdbc:mysql://localhost:3306/customerappdb 
 dbuser=trainee
 passwd=trainee
 driverclass=com.mysql.cj.jdbc.Driver
-poolsize=10
+poolsize=10	
