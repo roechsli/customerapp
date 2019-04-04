@@ -13,40 +13,11 @@ Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
 mysql> create database customerAppDb;
 Query OK, 1 row affected (0.01 sec)
 
-mysql> use customerAppDb<
-ERROR 1049 (42000): Unknown database 'customerappdb<'
-mysql> use customerAppDb<
-ERROR 1049 (42000): Unknown database 'customerappdb<'
-mysql> use customerAppDb;
 Database changed
 mysql> grant all privileges on customerAppDb.*
     -> to 'trainee'@'localhost' identified by 'trainee';
 Query OK, 0 rows affected (0.01 sec)
 
-mysql> create table customer(
-    -> id bigint not null primary key auto_increment = 1,
-    -> fname varchar(30) not null,
-    -> lname varchar(30) not null,
-    -> phone varchar(30));
-ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '= 1,
-fname varchar(30) not null,
-lname varchar(30) not null,
-phone varchar(30))' at line 2
-mysql> id bigint not null primary key auto_increment = 100,
-    -> 
-    -> Ctrl-C -- exit!
-
-    -> Ctrl-C -- exit!
-
-    -> ;
-ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'id bigint not null primary key auto_increment = 100,' at line 1
-mysql> create table customer(
-    -> id bigint not null primary key auto_increment = 100,
-    -> fname varchar(30) not null,
-    -> phone varchar(30));
-ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '= 100,
-fname varchar(30) not null,
-phone varchar(30))' at line 2
 mysql> create table customer (
     -> id bigint not null primary key auto_increment,
     -> fname varchar(30) not null,

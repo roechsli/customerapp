@@ -44,12 +44,12 @@ public class TestCustomerDao {
 		myCustList.forEach(System.out::println);
 		assertNotNull(custDao);
 	}
-	@Test @Ignore
+	@Test 
 	public void testBeansCustDao() {
 		ICustomerDao custDaoBean = (ICustomerDao) ctw.getBean("custDao");
 		custDaoBean.getAllCustomers().forEach(System.out::println);
 	}
-	@Test @Ignore
+	@Test 
 	public void testBeansCusts() {
 		ICustomerDao custDaoBean = (ICustomerDao) ctw.getBean("custDao");
 		for (int i = 1; i<5; i++) {
@@ -59,12 +59,21 @@ public class TestCustomerDao {
 		}
 		List<Customer> myCustList = custDao.getAllCustomers();
 		myCustList.forEach(System.out::println);
-//		custDaoBean.getAllCustomers().forEach(System.out::println);
-//		System.out.println(custDaoBean.getAllCustomers());
 	}
-	@Test  
+	@Test @Ignore
 	public void testDeleteCustomers() {
 		ICustomerDao custDaoBean = (ICustomerDao) ctw.getBean("custDao");
+		assertNotNull(custDaoBean.getAllCustomers());
+		List<Customer> myCustList = custDaoBean.getAllCustomers();
+		for (Customer cust : myCustList) {
+			custDaoBean.deleteCustomer(cust);
+		}
+		assertTrue(custDaoBean.getAllCustomers().isEmpty());
+		
+	}
+	@Test 
+	public void testCustDaoBean() {
+		ICustomerDao custDaoBean = (ICustomerDao) ctw.getBean("custDao2");
 		assertNotNull(custDaoBean.getAllCustomers());
 		List<Customer> myCustList = custDaoBean.getAllCustomers();
 		for (Customer cust : myCustList) {

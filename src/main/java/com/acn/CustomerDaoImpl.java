@@ -19,7 +19,13 @@ public class CustomerDaoImpl implements ICustomerDao {
 	private MyConnection myConn;
 	
 	public CustomerDaoImpl() {
-		myConn = new MyConnection();
+		// should be give as argument in constructor call
+//		myConn = new MyConnection();
+	}
+
+	public CustomerDaoImpl(MyConnection myConn) {
+		super();
+		this.myConn = myConn;
 	}
 
 	@Override

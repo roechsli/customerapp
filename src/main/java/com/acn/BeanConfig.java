@@ -3,6 +3,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
+import com.acn.Service.CustomerServiceImpl;
+import com.acn.Service.ICustomerService;
 import com.model.Customer;
 import com.model.ICustomer;
 
@@ -28,5 +30,17 @@ public class BeanConfig {
 	@Bean(name="custDao")
 	public ICustomerDao customerDao() {
 		return new CustomerDaoImpl();
+	}
+	@Bean(name="custDao2")
+	public ICustomerDao customerDao2() {
+		return new CustomerDaoImpl(myConn());
+	}
+	@Bean
+	public MyConnection myConn() {
+		return new MyConnection();
+	}
+	@Bean
+	public ICustomerService custServ() {
+		return new CustomerServiceImpl(customerDao2());
 	}
 }
