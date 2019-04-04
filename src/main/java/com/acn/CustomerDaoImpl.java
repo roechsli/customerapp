@@ -82,8 +82,29 @@ public class CustomerDaoImpl implements ICustomerDao {
 
 	@Override
 	public Customer getCustomerById(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		Customer myCustomer = null;
+		String sqlStr = "select * from customer where customer.id = ?";
+		ResultSet rs = null;
+
+		try (Connection conn = myConn.getMyConnection()){
+			PreparedStatement stmt = conn.prepareStatement(sqlStr);
+			stmt.setLong(1, id);
+			rs = stmt.executeQuery();
+			try {
+				if (rs.next()) {
+					myCustomer = getCustFromRs(rs);
+//					readAddressForCustomer(myCustomer, conn);
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return myCustomer;
 	}
 
 	@Override
@@ -109,14 +130,88 @@ public class CustomerDaoImpl implements ICustomerDao {
 
 	@Override
 	public void changeCustomer(Customer cust) {
-		// TODO Auto-generated method stub
+		Customer myCustomer = null;
+		Customer newCust = null;
+		String sqlStr = "update customer set fname = ?, lname = ? where id = ?";
+		ResultSet rs = null;
+		Connection conn = null; // has to be outside here, because we want to do a 
+		// rollabck in the catch block
 		
+		String fname = cust.getFirstName();
+		String lname = cust.getLastName();
+		Long id = cust.getId();
+
+		// programmatic handling on dbc level
+		try {
+			conn = myConn.getMyConnection();
+			// we want to group all transactions to one before we commit
+			conn.setAutoCommit(false); 
+			// this is a low level
+			conn.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED); 
+			PreparedStatement stmt = conn.prepareStatement(sqlStr);
+			stmt.setString(1, fname);         
+			stmt.setString(2, lname);         
+			stmt.setLong(3, id);
+			int numOfRows = stmt.executeUpdate();
+			if (numOfRows != 1) {
+				throw new IllegalArgumentException();
+			}
+			// if customer has address --> updateAddress, too
+			conn.commit(); // last statement in try block is always commit
+		} catch (SQLException e) {
+			try {
+				conn.rollback(); // if it didn't work, we have to rollback
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+		} finally {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 	@Override
 	public void deleteCustomer(Customer cust) {
-		// TODO Auto-generated method stub
+		String sqlStr = "delete from customer where id = ?";
+		ResultSet rs = null;
+		Connection conn = null; // has to be outside here, because we want to do a 
+		// rollabck in the catch block
 		
+		try {
+			conn = myConn.getMyConnection();
+			conn.setAutoCommit(false);
+			conn.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
+			// TODO add the transaction level here
+			PreparedStatement stmt = conn.prepareStatement(sqlStr);
+			Long custId = cust.getId();
+			if (custId != null) {
+				stmt.setLong(1, custId);
+			}
+			int rows = stmt.executeUpdate();
+			if (rows != 1) {
+				throw new IllegalArgumentException();
+			}
+			conn.commit();
+		} catch (SQLException e) {
+			try {
+				conn.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+		} finally {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}		
 	}
 	
 	private Customer getCustFromRs(ResultSet rs) {
